@@ -27,7 +27,10 @@ Utilizamos o **Poetry** para gestão de dependências e empacotamento. Certifiqu
 No diretório raiz do seu projeto Django, execute:
 
 ```bash
-poetry add senhaunica-socialite-python
+poetry add git+ssh://git@github.com/ayrtonnotrya/senhaunica-socialite-python.git
+
+# Ou via HTTPS
+poetry add git+https://github.com/ayrtonnotrya/senhaunica-socialite-python.git
 ```
 
 ### Dependências Core
