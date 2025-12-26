@@ -8,6 +8,8 @@ from .client import SenhaUnicaClient
 
 User = get_user_model()
 
+from django.urls import reverse
+
 class SenhaUnicaBackend(ModelBackend):
     """
     Custom Authentication Backend for Senha Unica USP.
@@ -32,9 +34,14 @@ class SenhaUnicaBackend(ModelBackend):
         # Load credentials from env
         key = os.getenv("SENHAUNICA_KEY")
         secret = os.getenv("SENHAUNICA_SECRET")
+        
         # Callback URL is needed for the client init, though arguably not used in access_token step
         # depending on strictness. We pass it for consistency.
-        callback = os.getenv("SENHAUNICA_CALLBACK_URL", "http://localhost:8000/callback")
+        try:
+             callback = request.build_absolute_uri(reverse('senhaunica_callback'))
+        except Exception:
+             # Fallback if request is not standard or reverse fails
+             callback = "http://localhost:8000/callback"
         callback_id = os.getenv("SENHAUNICA_CALLBACK_ID")
         env = os.getenv("SENHAUNICA_ENV", "prod")
 

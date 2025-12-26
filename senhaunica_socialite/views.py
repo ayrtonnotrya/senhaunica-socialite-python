@@ -14,7 +14,7 @@ def login_init(request: HttpRequest) -> HttpResponse:
     """
     key = os.getenv("SENHAUNICA_KEY")
     secret = os.getenv("SENHAUNICA_SECRET")
-    callback = os.getenv("SENHAUNICA_CALLBACK_URL", request.build_absolute_uri(reverse('senhaunica_callback')))
+    callback = request.build_absolute_uri(reverse('senhaunica_callback'))
     callback_id = os.getenv("SENHAUNICA_CALLBACK_ID")
     env = os.getenv("SENHAUNICA_ENV", "prod")
 

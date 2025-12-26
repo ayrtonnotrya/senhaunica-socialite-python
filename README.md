@@ -50,7 +50,7 @@ Crie ou atualize seu arquivo `.env` com as chaves abaixo. As chaves devem ser so
 | `SENHAUNICA_SECRET` | *Consumer Secret* fornecida pela USP. | `a1b2...` |
 | `SENHAUNICA_CALLBACK_ID` | ID de callback registrado junto à STI. **Obrigatório**. Define para onde a USP redirecionará o usuário. | `88` |
 | `SENHAUNICA_ENV` | Define os endpoints (`dev` ou `prod`). | `prod` |
-| `SENHAUNICA_CALLBACK_URL` | URL usada internamente pelo Authlib. Na USP, o redirecionamento real é controlado pelo `callback_id`. | `http://localhost:8000/callback` |
+
 
 > **Nota Técnica:** Diferente do OAuth 2.0, o OAuth 1.0a assina as requisições usando o *Secret*. Nunca comite este arquivo no controle de versão.
 
