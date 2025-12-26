@@ -2,7 +2,7 @@
 
 **Versão da Documentação:** 1.0.0
 **Status:** *Draft / Specification*
-**Compatibilidade:** Python 3.14.2 | Django 5.2.9 | Poetry 2.2
+**Compatibilidade:** Python 3.14.2 | Django 5.2.9 | Poetry
 
 ## 1. Introdução
 
@@ -20,7 +20,7 @@ A padronização da autenticação é crucial para a segurança dos dados da uni
 
 ## 2. Guia de Instalação
 
-Utilizamos o **Poetry 2.2** para gestão de dependências e empacotamento. Certifique-se de que seu ambiente possui o Python 3.14.2 ativo.
+Utilizamos o **Poetry** para gestão de dependências e empacotamento. Certifique-se de que seu ambiente possui o Python 3.14.2 ativo.
 
 ### Instalação via Poetry
 
