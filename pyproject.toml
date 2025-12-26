@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "senhaunica-socialite-python"
+version = "1.0.0"
+description = "Backend de Autenticação OAuth 1.0a da USP para Django"
+authors = ["Ayrton Douglas <ayrtondouglas@example.com>"]
+readme = "README.md"
+packages = [{include = "senhaunica_socialite"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^5.2"
+authlib = "^1.3"
+requests = "^2.31"
+sqlalchemy = "^2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
