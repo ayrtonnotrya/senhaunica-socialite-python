@@ -37,16 +37,9 @@ def login_init(request: HttpRequest) -> HttpResponse:
         
         # 3. Redirect
         url = client.get_authorization_url(oauth_token)
-        
-        print(f"DEBUG: ENV used: {env}")
-        print(f"DEBUG: Client Callback URL: {client.callback_url}")
-        print(f"DEBUG: Request Token Resp: {resp}")
-        print(f"DEBUG: Generated Auth URL: {url}")
-        
         return redirect(url)
 
     except Exception as e:
-        print(f"DEBUG: Exception: {e}")
         return HttpResponse(f"Error initiating login: {e}", status=502)
 
 

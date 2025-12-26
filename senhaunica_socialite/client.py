@@ -84,10 +84,15 @@ class SenhaUnicaClient:
         Exchanges the Verifier for the final Access Token.
         """
         session = self._get_session(token=request_token, token_secret=request_token_secret)
-        # Authlib automatically handles the verifier when calling fetch_access_token if passed in url or body
-        # Usually we pass verifier via parse_authorization_response or manually
-        session.parse_authorization_response(f"https://example.com/?oauth_verifier={verifier}")
-        return session.fetch_access_token(self.access_token_url)
+        
+        try:
+            # Use Authlib's built-in method which handles verifier placement correctly 
+            # (it updates the auth header/signature without creating a body/header conflict)
+            token = session.fetch_access_token(self.access_token_url, verifier=verifier)
+            return token
+            
+        except Exception as e:
+            raise e
 
     def get_user_info(self, access_token: str, access_token_secret: str) -> Dict[str, Any]:
         """

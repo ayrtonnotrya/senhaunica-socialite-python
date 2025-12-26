@@ -53,8 +53,9 @@ class SenhaUnicaBackend(ModelBackend):
             # 2. Fetch User Info
             user_info = client.get_user_info(access_token, access_token_secret)
             
-            # user_info typically contains: codpes, nompes, email, etc.
-            codpes = user_info.get('codpes')
+            # Map USP response keys (based on 'wsusuario' verification)
+            # Keys found: loginUsuario, nomeUsuario, emailPrincipalUsuario, emailUspUsuario
+            codpes = user_info.get('loginUsuario') or user_info.get('codpes')
             
             if not codpes:
                 return None
@@ -64,13 +65,11 @@ class SenhaUnicaBackend(ModelBackend):
             user, created = User.objects.get_or_create(username=str(codpes))
             
             # Update fields
-            user.first_name = user_info.get('nompes', '')
-            user.email = user_info.get('email', '')
+            user.first_name = user_info.get('nomeUsuario') or user_info.get('nompes', '')
+            user.email = user_info.get('emailPrincipalUsuario') or user_info.get('emailUspUsuario') or user_info.get('email', '')
             user.save()
 
             return user
 
-        except Exception as e:
-            # Log error normally here if logging was set up
-            print(f"SenhaUnica Auth Error: {e}")
+        except Exception:
             return None
