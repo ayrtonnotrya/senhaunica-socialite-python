@@ -1,8 +1,8 @@
 # Senha Única Socialite Python
 
-**Versão da Documentação:** 1.0.0
-**Status:** *Draft / Specification*
-**Compatibilidade:** Python 3.14.2 | Django 5.2.9 | Poetry
+- **Versão da Documentação:** 1.0.0
+- **Status:** *Draft / Specification*
+- **Compatibilidade:** Python 3.14.2 | Django 5.2.9 | Poetry
 
 ## 1. Introdução
 
