@@ -71,13 +71,14 @@ class SenhaUnicaClient:
         """
         Generates the full authorization URL for the user to visit.
         """
-        session = self._get_session(token=request_token)
-        # USP specific: callback_id must be appended to the authorize URL
-        kwargs = {}
+        # USP specific: callback_id must be appended.
+        # We manually construct the URL to avoid Authlib appending 'oauth_callback',
+        # which is redundant for USP (controlled by callback_id) and confusing.
+        params = {'oauth_token': request_token}
         if self.callback_id:
-            kwargs['callback_id'] = self.callback_id
+            params['callback_id'] = self.callback_id
             
-        return session.create_authorization_url(self.authorize_url, **kwargs)
+        return f"{self.authorize_url}?{urllib.parse.urlencode(params)}"
 
     def fetch_access_token(self, request_token: str, request_token_secret: str, verifier: str) -> Dict[str, str]:
         """
