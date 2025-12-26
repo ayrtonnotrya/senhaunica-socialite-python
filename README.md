@@ -114,5 +114,3 @@ urlpatterns = [
         *   `nomeUsuario` (ou `nompes`) -> `User.first_name`
         *   `emailPrincipalUsuario` -> `User.email`
 6.  **User Binding:** O `SenhaUnicaBackend` cria ou atualiza o usuário no Django e inicia a sessão.
-
----
