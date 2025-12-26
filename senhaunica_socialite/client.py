@@ -19,7 +19,7 @@ class SenhaUnicaClient:
     USP_Access_Token_URL_DEV = "https://dev.uspdigital.usp.br/wsusuario/oauth/access_token"
     USP_User_Info_URL_DEV = "https://dev.uspdigital.usp.br/wsusuario/oauth/usuariousp"
 
-    def __init__(self, consumer_key: str, consumer_secret: str, callback_url: str, env: str = "prod"):
+    def __init__(self, consumer_key: str, consumer_secret: str, callback_url: str, callback_id: str = None, env: str = "prod"):
         """
         Initializes the Senha Unica Client.
 
@@ -27,11 +27,13 @@ class SenhaUnicaClient:
             consumer_key: The OAuth Consumer Key.
             consumer_secret: The OAuth Consumer Secret.
             callback_url: The URL to redirect back to after authorization.
+            callback_id: The USP Callback ID (required for Authorize URL).
             env: The environment ('prod' or 'dev').
         """
         self.consumer_key = consumer_key
         self.consumer_secret = consumer_secret
         self.callback_url = callback_url
+        self.callback_id = callback_id
         self.env = env.lower()
 
         # Set endpoints based on environment
@@ -70,7 +72,12 @@ class SenhaUnicaClient:
         Generates the full authorization URL for the user to visit.
         """
         session = self._get_session(token=request_token)
-        return session.create_authorization_url(self.authorize_url)
+        # USP specific: callback_id must be appended to the authorize URL
+        kwargs = {}
+        if self.callback_id:
+            kwargs['callback_id'] = self.callback_id
+            
+        return session.create_authorization_url(self.authorize_url, **kwargs)
 
     def fetch_access_token(self, request_token: str, request_token_secret: str, verifier: str) -> Dict[str, str]:
         """

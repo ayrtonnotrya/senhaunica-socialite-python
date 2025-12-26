@@ -35,13 +35,14 @@ class SenhaUnicaBackend(ModelBackend):
         # Callback URL is needed for the client init, though arguably not used in access_token step
         # depending on strictness. We pass it for consistency.
         callback = os.getenv("SENHAUNICA_CALLBACK_URL", "http://localhost:8000/callback")
+        callback_id = os.getenv("SENHAUNICA_CALLBACK_ID")
         env = os.getenv("SENHAUNICA_ENV", "prod")
 
         if not key or not secret:
             # If credentials are missing, we cannot proceed
             return None
 
-        client = SenhaUnicaClient(key, secret, callback, env)
+        client = SenhaUnicaClient(key, secret, callback, callback_id=callback_id, env=env)
 
         try:
             # 1. Exchange Request Token for Access Token
