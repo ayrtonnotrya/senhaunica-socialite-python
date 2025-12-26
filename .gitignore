@@ -30,6 +30,7 @@ db.sqlite3-journal
 
 # Environment variables
 .env
+.env.testing
 .venv
 env/
 venv/
