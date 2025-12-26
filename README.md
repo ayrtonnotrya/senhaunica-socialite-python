@@ -48,9 +48,9 @@ Crie ou atualize seu arquivo `.env` com as chaves abaixo. As chaves devem ser so
 | :--- | :--- | :--- |
 | `SENHAUNICA_KEY` | *Consumer Key* fornecida pela USP. | `ff8a...` |
 | `SENHAUNICA_SECRET` | *Consumer Secret* fornecida pela USP. | `a1b2...` |
-| `SENHAUNICA_CALLBACK_ID` | ID de callback registrado na aplicação PHP/Legacy (opcional em Python, mas recomendado para compatibilidade). | `88` |
+| `SENHAUNICA_CALLBACK_ID` | ID de callback registrado junto à STI. **Obrigatório**. Define para onde a USP redirecionará o usuário. | `88` |
 | `SENHAUNICA_ENV` | Define os endpoints (`dev` ou `prod`). | `prod` |
-| `SENHAUNICA_CALLBACK_URL` | URL absoluta para retorno após login. | `https://myapp.usp.br/callback` |
+| `SENHAUNICA_CALLBACK_URL` | URL usada internamente pelo Authlib. Na USP, o redirecionamento real é controlado pelo `callback_id`. | `http://localhost:8000/callback` |
 
 > **Nota Técnica:** Diferente do OAuth 2.0, o OAuth 1.0a assina as requisições usando o *Secret*. Nunca comite este arquivo no controle de versão.
 
@@ -105,8 +105,12 @@ urlpatterns = [
 2.  **Autorização:** O usuário digita a senha única.
 3.  **Callback:** A USP redireciona para `/callback/` com um `oauth_verifier`.
 4.  **Troca de Token:** O pacote troca o *Request Token* + *Verifier* pelo *Access Token*.
-5.  **Obtenção de Dados:** O pacote consulta o endpoint `/wsusuario/oauth/usuariousp` (retornando `codpes`, `nompes`, `email`).
-6.  **User Binding:** O `SenhaUnicaBackend` verifica se o usuário existe no banco (via Django ORM ou SQLAlchemy), cria/atualiza o registro e loga o usuário na sessão do Django.
+5.  **Obtenção de Dados:** O pacote consulta o endpoint `/wsusuario/oauth/usuariousp`.
+    *   Mapeamento Automático:
+        *   `loginUsuario` (ou `codpes`) -> `User.username`
+        *   `nomeUsuario` (ou `nompes`) -> `User.first_name`
+        *   `emailPrincipalUsuario` -> `User.email`
+6.  **User Binding:** O `SenhaUnicaBackend` cria ou atualiza o usuário no Django e inicia a sessão.
 
 ---
 
