@@ -173,23 +173,3 @@ __pycache__
 tests/
 docs/
 ```
-
----
-
-## 6. Regras para IA (Google Antigravity)
-
-Esta seção define as diretrizes estritas para agentes de IA (como Google Antigravity/Gemini) ao gerarem ou refatorarem código para este pacote.
-
-### 6.1. Padrões de Código (PEP 8 & Type Hinting)
-*   **Tipagem Estática:** Todo o código deve utilizar Type Hints do Python moderno (3.12+).
-    *   *Incorreto:* `def authenticate(request):`
-    *   *Correto:* `def authenticate(request: HttpRequest) -> Optional[AbstractBaseUser]:`
-*   **Docstrings (PEP 257):** Todas as classes e métodos públicos devem ter docstrings no formato Google Style.
-
-### 6.2. Estrutura e Importações
-*   Siga a ordem de imports: Biblioteca Padrão > Bibliotecas de Terceiros (Django, Authlib, SQLAlchemy) > Imports Locais.
-*   Evite `import *`.
-
-### 6.3. Especificidades do OAuth 1.0 (Authlib)
-Ao gerar código de conexão, a IA deve priorizar a classe `OAuth1Session` da `authlib.integrations.requests_client`.
-*   **Atenção:** O endpoint de `request_token` da USP não retorna JSON, mas sim uma string *query-encoded*. O código deve tratar o parsing manualmente ou verificar se a lib faz isso automaticamente.
